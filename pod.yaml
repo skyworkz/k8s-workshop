@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-count
+spec:
+  containers:
+    - name: simple-flask-count
+      image: unibond7/k8s-skyworkz-workshop:latest
+      ports:
+        - containerPort: 5000
+      env:
+      - name: MY_POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: ENV_VAR
+        valueFrom:
+          configMapKeyRef:
+            name: example-cm
+            key: env.var
+      - name: ENV_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: example-secret
+            key: env_secret
+
